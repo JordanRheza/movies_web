@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Buscador de películas</title>
+</head>
+
+<body>
+  <header class="header">
+    <a href="#">
+      <h1>Movies <span>Web</span></h1>
+    </a>
+
+    <div class="search-container">
+
+      <input type="text" id="searchInput" class="search" placeholder="Buscar Pelicula">
+      <button id="searchButton">Buscar</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="movies-container" id="results">
+
+    </div>
+
+    <!-- Modal structure -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body" class="modal-body">
+          <!-- Aquí se mostrará el tráiler y la descripción -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <script src="js/script.js"></script>
+</body>
+
+</html>
