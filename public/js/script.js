@@ -13,7 +13,7 @@ async function getMovies(url) {
     console.log(data.movies.results);
     showMovies(data.movies.results);
 }
-
+ 
 function createMovieElement(movie) {
     const { id, title, backdrop_path, release_date, vote_average, overview } = movie;
 
