@@ -10,7 +10,6 @@ async function getMovies(url) {
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log(data.movies.results);
     showMovies(data.movies.results);
 }
  
@@ -105,26 +104,29 @@ function openModal(movieId, movieDescription, vote) {
         });
 }
 
-// Función para cerrar el modal
-span.onclick = function () {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-};
-
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-};
-
-// Función para obtener la clase según la calificación
 function getClassByRate(vote) {
-    if (vote >= 8) {
-        return 'green';
-    } else if (vote >= 5) {
-        return 'orange';
-    } else {
-        return 'red';
+    if(vote >= 8) return 'green'
+    else if(vote >= 5) return 'orange'
+    else return 'red'
+}
+
+// Cerrar el modal cuando se haga clic en <span> (x)
+span.onclick = function() {
+    closeModal();
+}
+
+// Cerrar el modal cuando el usuario haga clic fuera del modal
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
     }
+}
+
+// Función para cerrar el modal y detener el tráiler
+function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'initial';
+
+    // Eliminar el contenido del modal para detener el video
+    document.getElementById('modal-body').innerHTML = '';
 }
