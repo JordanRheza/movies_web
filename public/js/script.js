@@ -1,4 +1,7 @@
 const resultContainer = document.getElementById('results');
+const searchBtn = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchTxt');
+
 const url = '/.netlify/functions/fetch-data';
 
 const urlImg = 'https://image.tmdb.org/t/p/w400'
@@ -9,7 +12,6 @@ getMovies(url);
 async function getMovies(url) {
     const response = await fetch(url);
     const data = await response.json();
-
     showMovies(data.movies.results);
 }
  
@@ -40,23 +42,12 @@ function createMovieElement(movie) {
 
 // Función para mostrar las películas populares
 function showMovies(movies) {
-    resultContainer.innerHTML = '';
+    resultContainer.innerHTML = ''; // Limpiar resultados anteriores
     movies.forEach(movie => {
         const movieElement = createMovieElement(movie);
         resultContainer.appendChild(movieElement);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* MODAL */
 const modal = document.getElementById('myModal');
@@ -129,4 +120,36 @@ function closeModal() {
 
     // Eliminar el contenido del modal para detener el video
     document.getElementById('modal-body').innerHTML = '';
+}
+
+searchBtn.addEventListener('click', searchMovie)
+function searchMovie() {
+    // Obtener el valor del input
+    const searchTerm = searchInput.value.trim();
+
+    // Validar si el input está vacío
+    if (searchTerm === '') {
+        // Si el input está vacío, mostrar las películas de la primera página
+        getMovies(url);
+    } else {
+        // Si no está vacío, realiza la búsqueda con el término ingresado
+        performSearch(searchTerm);
+    }
+}
+
+// Función para realizar la búsqueda en la API (función serverless en Netlify)
+function performSearch(search) {
+    fetch(`/.netlify/functions/fetch-data?search=${search}`)
+        .then(response => {
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            showMovies(data.results.results);
+            console.log(data)
+        })
+        .catch(error => {
+            console.error('Error fetching search results', error);
+            resultContainer.innerHTML = `<p>Error al buscar películas</p>`;
+        });
 }
