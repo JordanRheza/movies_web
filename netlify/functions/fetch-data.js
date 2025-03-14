@@ -27,7 +27,7 @@ export const handler = async (event, context) => {
             const searchUrl = `${urlBase}search/movie?api_key=${apiKey}&language=${language}&query=${searchQuery}`
             const response = await fetch(searchUrl)
             const searchData = await response.json()
-            console.log(searchUrl)
+            
             return {
                 statusCode: 200,
                 body: JSON.stringify({
@@ -37,7 +37,7 @@ export const handler = async (event, context) => {
         } else {
             // Si no se envía ni `movieId` ni `search`, obtenemos las películas populares
             const discoverUrl = `${urlBase}discover/movie?api_key=${apiKey}&language=${language}&sort_by=popularity.desc&page=1`
-            console.log(discoverUrl)
+            
             const response = await fetch(discoverUrl)
             const movieData = await response.json()
 

@@ -148,7 +148,10 @@ header h1 span {
 
 /* Modal content */
 .modal-content {
-  background-color: var(--primary-color);
+  background-color: rgba(66, 152, 169, 0.1);
+  backdrop-filter: blur(20px) saturate(168%);
+  -webkit-backdrop-filter: blur(20px) saturate(168%);
+  border: 1px solid rgba(66, 152, 169, 0.2);
   margin: 5% auto;
   padding: 20px;
   border-radius: 3px;

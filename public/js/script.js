@@ -85,7 +85,7 @@ function openModal(movieId, movieDescription, vote) {
             document.body.style.overflow = 'hidden';
         })
         .catch(error => {
-            console.error('Error fetching trailer:', error);
+            
             modalBody.innerHTML = `
                 <p>Error al cargar el tráiler.</p>
                 <h3>Descripción</h3>
@@ -146,10 +146,10 @@ function performSearch(search) {
         })
         .then(data => {
             showMovies(data.results.results);
-            console.log(data)
+            
         })
         .catch(error => {
-            console.error('Error fetching search results', error);
+            
             resultContainer.innerHTML = `<p>Error al buscar películas</p>`;
         });
 }
