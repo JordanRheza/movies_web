@@ -2,9 +2,12 @@ const resultContainer = document.getElementById('results');
 const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchTxt');
 
+// Url de la para realizar la llamada a la funcion serverless de Netlify
 const url = '/.netlify/functions/fetch-data';
 
+// Url para la definicion de las imagenes w100 al w500
 const urlImg = 'https://image.tmdb.org/t/p/w400'
+
 // Cargar películas populares al inicio
 getMovies(url);
 
@@ -14,26 +17,37 @@ async function getMovies(url) {
     const data = await response.json();
     showMovies(data.movies.results);
 }
- 
+
 function createMovieElement(movie) {
+    // Destruccion del objeto movie para usar los atributos necesario
     const { id, title, backdrop_path, release_date, vote_average, overview } = movie;
 
     const movieDiv = document.createElement('div');
-    movieDiv.classList.add('movie');
+    // Mostrar diferentes tamaños, dependiendo de la pantalla
+    movieDiv.classList.add('col-12', 'col-sm-6', 'col-md-4', 'col-lg-4', 'py-2', 'd-flex', 'justify-content-center', 'align-items-center');
 
-    const imgSrc = backdrop_path ? `${urlImg + backdrop_path}` : 'https://th.bing.com/th/id/OIP.H1gHhKVbteqm1U5SrwpPgwAAAA?rs=1&pid=ImgDetMain';
+
+    // Ternario por si la imagen no esta disponible, muestre una por defecto
+    const imgSrc = backdrop_path
+        ? `${urlImg + backdrop_path}`
+        : 'https://th.bing.com/th/id/OIP.H1gHhKVbteqm1U5SrwpPgwAAAA?rs=1&pid=ImgDetMain';
     const date = release_date ? `Estreno: ${release_date}` : 'Fecha desconocida';
+
     movieDiv.innerHTML = `
-        <img src="${imgSrc}" alt="${title}" />
-        <div class="movie-info">
-            <h3>${title}</h3>
-            <p>${date}</p>
-            <button class="play-button">Play</button>
+        <div class="card h-100" style="width: 22rem;">
+            <img src="${imgSrc}" alt="${title}" class="card-img-top"/>
+            <div class="card-body d-flex flex-column">
+                <h3 class="card-title">${title}</h3>
+                <div class="mt-auto">
+                    <p class="card-text mb-2">${date}</p>
+                    <button class="btn btn-primary" id="abrirModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Play</button>
+                </div>
+            </div>
         </div>
     `;
 
-    // Agregar el evento para abrir el modal con los videos
-    movieDiv.querySelector('.play-button').addEventListener('click', function () {
+    // Evento para abrir el modal
+    movieDiv.querySelector('#abrirModal').addEventListener('click', function () {
         openModal(id, overview, vote_average);
     });
 
@@ -49,77 +63,59 @@ function showMovies(movies) {
     });
 }
 
-/* MODAL */
-const modal = document.getElementById('myModal');
-const span = document.getElementsByClassName('close')[0];
-
 function openModal(movieId, movieDescription, vote) {
-    const modalBody = document.getElementById('modal-body');
     const rating = vote.toFixed(2);
+    const modalBody = document.getElementById('modal-body');
 
-    // Llamada a la función serverless para obtener los videos de la película
     fetch(`/.netlify/functions/fetch-data?movieId=${movieId}`)
         .then(response => response.json())
         .then(data => {
             const video = data.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
 
+            // Se muestra el trailer si esta disponible, si no se muestra el mensaje de 'Tráiler no disponible.'
             if (video) {
                 modalBody.innerHTML = `
-                    <h2>Tráiler</h2>
-                    <iframe width="100%" height="315px" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
-                    <div class="trailer-info">
-                        <h3>Descripción</h3>
-                        <p>${movieDescription}</p>
-                        <p>Calificación: <span class="${getClassByRate(rating)}">${rating}</span></p>
+                    <div class="ratio ratio-16x9 mb-3">
+                      <iframe src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
                     </div>
+                    <h5>Descripción</h5>
+                    <p>${movieDescription}</p>
+                    <p><strong>Rating:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
                 `;
             } else {
                 modalBody.innerHTML = `
                     <p>Tráiler no disponible.</p>
-                    <h3>Descripción</h3>
+                    <h5>Descripción</h5>
                     <p>${movieDescription}</p>
+                    <p><strong>Rating:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
                 `;
             }
-
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
         })
         .catch(error => {
-            
             modalBody.innerHTML = `
-                <p>Error al cargar el tráiler.</p>
-                <h3>Descripción</h3>
+                <p>Trailer no disponible.</p>
+                <h5>Descripción</h5>
                 <p>${movieDescription}</p>
+                <p><strong>Calificacion:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
             `;
-            modal.style.display = 'block';
         });
 }
 
+//
+const modalElement = document.getElementById('exampleModal');
+const modalBody = document.getElementById('modal-body');
+
+// Evento que Bootstrap dispara despues de que el modal se cierra.
+modalElement.addEventListener('hidden.bs.modal', function () {
+    // Limpiar el contenido del modal al cerrarlo y asi forzar al detener el trailer
+    modalBody.innerHTML = '';
+});
+   
+// Funcion para mostrar con color la calificacion de la pelicula
 function getClassByRate(vote) {
-    if(vote >= 8) return 'green'
-    else if(vote >= 5) return 'orange'
+    if (vote >= 8) return 'green'
+    else if (vote >= 5) return 'orange'
     else return 'red'
-}
-
-// Cerrar el modal cuando se haga clic en <span> (x)
-span.onclick = function() {
-    closeModal();
-}
-
-// Cerrar el modal cuando el usuario haga clic fuera del modal
-window.onclick = function(event) {
-    if (event.target == modal) {
-        closeModal();
-    }
-}
-
-// Función para cerrar el modal y detener el tráiler
-function closeModal() {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'initial';
-
-    // Eliminar el contenido del modal para detener el video
-    document.getElementById('modal-body').innerHTML = '';
 }
 
 searchBtn.addEventListener('click', searchMovie)
@@ -127,17 +123,16 @@ function searchMovie() {
     // Obtener el valor del input
     const searchTerm = searchInput.value.trim();
 
-    // Validar si el input está vacío
+    // Validacion si el input esta vacio, se muestra las peliculas principales
     if (searchTerm === '') {
-        // Si el input está vacío, mostrar las películas de la primera página
         getMovies(url);
     } else {
-        // Si no está vacío, realiza la búsqueda con el término ingresado
+        // Si no está vacío, realiza la búsqueda con el nombre de la pelicula ingresado ingresado
         performSearch(searchTerm);
     }
 }
 
-// Función para realizar la búsqueda en la API (función serverless en Netlify)
+// Realiza la búsqueda en la API pasandole el parametro search, funcion serverless de Netlify
 function performSearch(search) {
     fetch(`/.netlify/functions/fetch-data?search=${search}`)
         .then(response => {
@@ -146,10 +141,8 @@ function performSearch(search) {
         })
         .then(data => {
             showMovies(data.results.results);
-            
         })
         .catch(error => {
-            
             resultContainer.innerHTML = `<p>Error al buscar películas</p>`;
         });
 }

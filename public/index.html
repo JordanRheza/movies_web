@@ -1,45 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="img/favicon.webp" type="image/webp">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
   <link rel="stylesheet" href="css/styles.css">
   <title>MoviesWeb</title>
 </head>
 
 <body>
-  <header class="header">
-    <a href="index.html">
-      <h1>Movies <span>Web</span></h1>
-    </a>
 
-    <div class="search-container">
+  <nav class="navbar navbar-expand-lg bg-primary sticky-top px-2">
+    <div class="container-fluid">
+      <a class="navbar-brand text-lg" href="/">MoviesWeb</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
+         
+        <!-- Para uso futuro -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Peliculas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Series</a>
+          </li>
+        </ul>
 
-      <input type="text" id="searchTxt" class="search" placeholder="Buscar Pelicula">
-      <button id="searchBtn">Buscar</button>
-    </div>
-  </header>
-
-  <main>
-    <div class="movies-container" id="results">
-
-    </div>
-
-    <!-- Modal structure -->
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <div id="modal-body" class="modal-body">
-          <!-- Aquí se mostrará el tráiler y la descripción -->
+        <div class="d-flex">
+          <!-- Se ingresa texto para buscar la pelicula relacionada -->
+          <input class="form-control me-2" type="text" placeholder="Ingrese" aria-label="Search" id="searchTxt">
+          <button class="btn btn-success" id="searchBtn">Buscar</button>
         </div>
       </div>
     </div>
+  </nav>
 
+  <main class="container">
+    <div class="row" id="results">
+      <!-- Se muestra las peliculas recientemente estrenadas al carga la pagina -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Trailer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body" id="modal-body">
+            <!-- Se muestra el trailer y su contenido -->
+          </div>
+        </div>
+      </div>
+    </div>
+   
   </main>
+
   <script src="js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
