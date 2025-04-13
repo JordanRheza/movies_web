@@ -5,8 +5,8 @@ const searchInput = document.getElementById('searchTxt');
 // Url de la para realizar la llamada a la funcion serverless de Netlify
 const url = '/.netlify/functions/fetch-data';
 
-// Url para la definicion de las imagenes w100 al w500
-const urlImg = 'https://image.tmdb.org/t/p/w400'
+// Url para la definicion de las imagenes w100 al w500 o original para alta resolucion
+const urlImg = 'https://image.tmdb.org/t/p/w500';
 
 // Cargar películas populares al inicio
 getMovies(url);
@@ -40,7 +40,7 @@ function createMovieElement(movie) {
                 <h3 class="card-title">${title}</h3>
                 <div class="mt-auto">
                     <p class="card-text mb-2">${date}</p>
-                    <button class="btn btn-info text-light" id="abrirModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver trailer</button>
+                    <button class="btn btn-outline-info" id="abrirModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver trailer</button>
                 </div>
             </div>
         </div>
@@ -73,35 +73,39 @@ function openModal(movieId, movieDescription, vote) {
             const video = data.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
 
             // Se muestra el trailer si esta disponible, si no se muestra el mensaje de 'Tráiler no disponible.'
-            if (video) {
-                modalBody.innerHTML = `
-                    <div class="ratio ratio-16x9 mb-3">
-                      <iframe src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <h5>Descripción</h5>
-                    <p>${movieDescription}</p>
-                    <p><strong>Rating:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
-                `;
-            } else {
-                modalBody.innerHTML = `
-                    <p>Tráiler no disponible.</p>
-                    <h5>Descripción</h5>
-                    <p>${movieDescription}</p>
-                    <p><strong>Rating:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
-                `;
-            }
+            const trailerHTML = video
+                ? `
+        <div class="ratio ratio-16x9 mb-3">
+          <iframe src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      `
+                : `<p>Tráiler no disponible.</p>`;
+
+            modalBody.innerHTML = `
+      ${trailerHTML}
+      <h4>Descripción</h4>
+      <p>${movieDescription}</p>
+      <p><strong>Puntuación:</strong> <span class="text-${getClassByRate(vote)}">${rating}</span></p>
+    `;
         })
         .catch(error => {
             modalBody.innerHTML = `
-                <p>Trailer no disponible.</p>
-                <h5>Descripción</h5>
-                <p>${movieDescription}</p>
-                <p><strong>Calificacion:</strong> <span class="${getClassByRate(vote)}">${rating}</span></p>
-            `;
+      <p>Tráiler no disponible.</p>
+      <h4>Descripción</h4>
+      <p>${movieDescription}</p>
+      <p><strong>Puntuación:</strong> <span class="text-${getClassByRate(vote)}">${rating}</span></p>
+    `;
         });
 }
 
-//
+// Funcion para mostrar con color la calificacion de la pelicula
+function getClassByRate(vote) {
+    if (vote >= 8) return 'success'
+    else if (vote >= 5) return 'warning'
+    else return 'danger'
+}
+
+// Modal
 const modalElement = document.getElementById('exampleModal');
 const modalBody = document.getElementById('modal-body');
 
@@ -110,13 +114,6 @@ modalElement.addEventListener('hidden.bs.modal', function () {
     // Limpiar el contenido del modal al cerrarlo y asi forzar al detener el trailer
     modalBody.innerHTML = '';
 });
-   
-// Funcion para mostrar con color la calificacion de la pelicula
-function getClassByRate(vote) {
-    if (vote >= 8) return 'green'
-    else if (vote >= 5) return 'orange'
-    else return 'red'
-}
 
 searchBtn.addEventListener('click', searchMovie)
 function searchMovie() {
