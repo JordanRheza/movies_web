@@ -8,39 +8,46 @@
   <link rel="icon" href="img/favicon.webp" type="image/webp">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
   <link rel="stylesheet" href="css/styles.css">
-  <title>MoviesWeb</title>
+  <title>filmoWeb</title>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg bg-primary sticky-top px-2">
+  <!-- Fondo -->
+  <div class="custom-bg"></div>
+
+  <nav class="navbar sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand text-lg" href="/">MoviesWeb</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand ps-3" href="/">filmo<span class="text-info">Web</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        
-         
-        <!-- Para uso futuro -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Peliculas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Series</a>
-          </li>
-        </ul>
-
-        <div class="d-flex">
-          <!-- Se ingresa texto para buscar la pelicula relacionada -->
-          <input class="form-control me-2" type="text" placeholder="Ingrese" aria-label="Search" id="searchTxt">
-          <button class="btn btn-success" id="searchBtn">Buscar</button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <!-- Uso futuro -->
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">Serie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pelicula</a>
+            </li>
+          </ul>
+          <!--Fin Uso futuro -->
+          <div class="d-flex py-2">
+            <!-- Se ingresa texto para buscar la pelicula relacionada -->
+            <input class="form-control me-2" type="text" placeholder="Busca pelicula" aria-label="Search" id="searchTxt">
+            <button class="btn btn-outline-info" id="searchBtn">Buscar</button>
+          </div>
         </div>
       </div>
     </div>
   </nav>
+  <!--  -->
 
   <main class="container">
     <div class="row" id="results">

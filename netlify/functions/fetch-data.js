@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 export const handler = async (event, context) => {
     const urlBase = 'https://api.themoviedb.org/3/'
     const apiKey = process.env.API_KEY
-    const language = '&language=es-MX'
+    const language = 'es-MX'
 
     // Verificar si se ha enviado un `movieId`
     const movieId = event.queryStringParameters.movieId

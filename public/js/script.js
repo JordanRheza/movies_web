@@ -30,17 +30,17 @@ function createMovieElement(movie) {
     // Ternario por si la imagen no esta disponible, muestre una por defecto
     const imgSrc = backdrop_path
         ? `${urlImg + backdrop_path}`
-        : 'https://th.bing.com/th/id/OIP.H1gHhKVbteqm1U5SrwpPgwAAAA?rs=1&pid=ImgDetMain';
+        : '/img/no-disponible.jpg';
     const date = release_date ? `Estreno: ${release_date}` : 'Fecha desconocida';
 
     movieDiv.innerHTML = `
         <div class="card h-100" style="width: 22rem;">
-            <img src="${imgSrc}" alt="${title}" class="card-img-top"/>
+            <img src="${imgSrc}" alt="${title}" class="card-img-top same-height"/>
             <div class="card-body d-flex flex-column">
                 <h3 class="card-title">${title}</h3>
                 <div class="mt-auto">
                     <p class="card-text mb-2">${date}</p>
-                    <button class="btn btn-primary" id="abrirModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Play</button>
+                    <button class="btn btn-info text-light" id="abrirModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Ver trailer</button>
                 </div>
             </div>
         </div>
