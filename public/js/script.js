@@ -115,6 +115,13 @@ modalElement.addEventListener('hidden.bs.modal', function () {
     modalBody.innerHTML = '';
 });
 
+// Buscar pelicula al prensionar la tecla Enter
+searchInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      searchMovie();
+    }
+  });
+
 searchBtn.addEventListener('click', searchMovie)
 function searchMovie() {
     // Obtener el valor del input
@@ -124,7 +131,7 @@ function searchMovie() {
     if (searchTerm === '') {
         getMovies(url);
     } else {
-        // Si no está vacío, realiza la búsqueda con el nombre de la pelicula ingresado ingresado
+        // Si no está vacío, realiza la búsqueda con el nombre de la pelicula ingresado
         performSearch(searchTerm);
     }
 }
