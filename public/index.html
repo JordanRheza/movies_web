@@ -5,82 +5,173 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="filmoWeb - Busca películas, series y más con toda la info y trailers.">
-  <meta name="keywords" content="películas, series, trailers, cine, filmoWeb">
+  <meta name="description" content="filmoWeb - Descubre películas, series y más con trailers en HD y toda la información que necesitas.">
+  <meta name="keywords" content="películas, series, trailers, cine, filmoWeb, streaming, entretenimiento">
   <meta name="author" content="Jordan Rheza">
   <link rel="icon" href="img/favicon.webp" type="image/webp">
+  
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/styles.css">
 
-  <title>filmoWeb</title>
+  <title>filmoWeb - Tu portal de entretenimiento</title>
+  
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Fondo -->
+  <!-- Fondo animado -->
   <div class="custom-bg"></div>
 
+  <!-- Navbar mejorada -->
   <nav class="navbar sticky-top glass container rounded">
     <div class="container-fluid">
-      <div class="d-flex justify-content-between w-100 flex-wrap">
+      <div class="d-flex justify-content-between w-100 flex-wrap align-items-center">
         <!-- Botón del offcanvas -->
-        <button class="navbar-toggler mb-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-info fs-5"></i>
         </button>
   
-        <!-- Título -->
-        <a class="navbar-brand margin-title fs-3" href="/">filmo<span class="text-info">Web</span></a>
+        <!-- Título con efecto -->
+        <a class="navbar-brand text-glow fs-3 fw-bold" href="/">
+          <i class="fas fa-film me-2"></i>filmo<span class="text-info">Web</span>
+        </a>
   
-        <!-- Input + botón responsive -->
-        <div class="d-flex my-auto" >
-          <input class="form-control me-2" type="search" placeholder="Buscar Pelicula:" id="searchTxt" aria-label="Search">
-          <button class="btn btn-outline-info" type="submit" id="searchBtn">Buscar</button>
+        <!-- Barra de búsqueda mejorada -->
+        <div class="d-flex my-auto position-relative">
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="Buscar película..." id="searchTxt" aria-label="Search">
+            <button class="btn btn-outline-info" type="submit" id="searchBtn">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-  
-      
+    </div>
   </nav>
   
-  <!-- Offcanvas -->
-  <div class="offcanvas offcanvas-start glass rounded" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header border-bottom border-info ">
-      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+  <!-- Offcanvas mejorado -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header border-bottom border-info">
+      <h5 class="offcanvas-title d-flex align-items-center" id="offcanvasNavbarLabel">
+        <i class="fas fa-compass me-2 text-info"></i>
+        Explorar
+      </h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <!-- Uso Futuro -->
       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Serie</a>
+          <a class="nav-link d-flex align-items-center" aria-current="page" href="#">
+            <i class="fas fa-tv me-2"></i>
+            Series
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pelicula</a>
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="fas fa-film me-2"></i>
+            Películas
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="fas fa-star me-2"></i>
+            Populares
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" href="#">
+            <i class="fas fa-calendar me-2"></i>
+            Próximos estrenos
+          </a>
         </li>
       </ul>
+      
+      <!-- Información adicional en el sidebar -->
+      <div class="mt-4 pt-4 border-top border-secondary">
+        <h6 class="text-info mb-3">
+          <i class="fas fa-info-circle me-2"></i>
+          Acerca de
+        </h6>
+        <p class="text-white-50 small">
+          filmoWeb te permite descubrir las mejores películas y series con trailers en alta calidad.
+        </p>
+      </div>
     </div>
   </div>
-</div>
-  <main class="container">
-    <div class="row" id="results">
-      <!-- Se muestra las peliculas recientemente estrenadas al carga la pagina -->
-    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="modalLabel">Trailer</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body" id="modal-body">
-            <!-- Se muestra el trailer y su contenido -->
-          </div>
+  <!-- Contenido principal -->
+  <main class="container">
+    <!-- Header de bienvenida -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="text-center py-4">
+          <h1 class="display-4 fw-bold text-white mb-3 text-glow">
+            Descubre el mundo del cine
+          </h1>
+          <p class="lead text-white-50 mb-0">
+            Explora las películas más populares y encuentra tu próxima obsesión cinematográfica
+          </p>
         </div>
       </div>
     </div>
-   
+
+    <!-- Grid de películas -->
+    <div class="row" id="results">
+      <!-- Se muestran las películas aquí -->
+    </div>
   </main>
 
+  <!-- Modal mejorado -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title d-flex align-items-center" id="modalLabel">
+            <i class="fas fa-play-circle me-2 text-info"></i>
+            Trailer
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <!-- Contenido del modal -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="container mt-5 py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="glass rounded p-4 text-center">
+          <p class="text-white-50 mb-2">
+            <i class="fas fa-heart text-danger me-1"></i>
+            Hecho con pasión por el cine
+          </p>
+          <p class="text-white-50 small mb-0">
+            © 2024 filmoWeb - Todos los derechos reservados
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
   <script src="js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"

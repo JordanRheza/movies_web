@@ -1,32 +1,376 @@
-/* Background */
+/* Variables CSS para consistencia */
+:root {
+  --primary-color: #0dcaf0;
+  --primary-dark: #0aa2c0;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --shadow-light: rgba(13, 202, 240, 0.2);
+  --shadow-dark: rgba(0, 0, 0, 0.3);
+  --gradient-primary: linear-gradient(135deg, rgba(13, 202, 240, 0.1) 0%, rgba(13, 202, 240, 0.05) 100%);
+}
+
+/* Background mejorado */
 .custom-bg {
   position: fixed;
   top: 0;
   z-index: -2;
   min-height: 100vh;
   width: 100vw;
-  background-color: #000000;
-  background-image: radial-gradient(#ffffff33 1px, #00091d 1px);
-  background-size: 20px 20px;
+  background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(13, 202, 240, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(13, 202, 240, 0.05) 0%, transparent 50%),
+    radial-gradient(#ffffff15 1px, transparent 1px);
+  background-size: 800px 800px, 600px 600px, 30px 30px;
+  animation: backgroundShift 20s ease-in-out infinite;
 }
 
-/* Imagenes con la misma altura */
+@keyframes backgroundShift {
+  0%, 100% { background-position: 0% 0%, 100% 100%, 0 0; }
+  50% { background-position: 100% 100%, 0% 0%, 15px 15px; }
+}
+
+/* Glass Effect mejorado */
+.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(13, 202, 240, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(13, 202, 240, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Navbar mejorada */
+.navbar {
+  margin-top: 20px;
+  border-radius: 20px !important;
+  padding: 15px 25px;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.8rem !important;
+  background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+/* Botones mejorados */
+.btn-outline-info {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(13, 202, 240, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-outline-info:hover::before {
+  left: 100%;
+}
+
+.btn-outline-info:hover {
+  background: var(--primary-color);
+  color: #000;
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 25px rgba(13, 202, 240, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Input mejorado */
+.form-control {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: var(--text-primary);
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+  color: var(--text-primary);
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Cards mejoradas */
+.card {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), transparent, var(--primary-color));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(13, 202, 240, 0.3) !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(13, 202, 240, 0.15);
+}
+
+.card-img-top {
+  border-radius: 15px 15px 0 0 !important;
+  transition: all 0.4s ease;
+  filter: brightness(0.9);
+}
+
+.card:hover .card-img-top {
+  filter: brightness(1.1) saturate(1.2);
+}
+
 .same-height {
-  height: 200px;
+  height: 250px;
   object-fit: cover;
 }
 
-/* Glass Efect */
-.glass {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.1); 
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.card-body {
+  padding: 20px !important;
 }
 
-/* Titulo centrado */
-.margin-title {
-  margin-left: 150px;
-  text-align: center;
-  color: #fff;
+.card-title {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.card-text {
+  color: var(--text-secondary) !important;
+  font-size: 0.9rem;
+}
+
+/* Modal mejorado */
+.modal-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px;
+}
+
+.modal-title {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.modal-body {
+  padding: 25px;
+  color: var(--text-secondary);
+}
+
+.btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+
+/* Offcanvas mejorado */
+.offcanvas {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 0 20px 20px 0;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.offcanvas-header {
+  border-bottom-color: rgba(13, 202, 240, 0.3) !important;
+}
+
+.offcanvas-title {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.nav-link {
+  color: var(--text-secondary) !important;
+  padding: 12px 20px !important;
+  border-radius: 10px;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+  background: rgba(13, 202, 240, 0.1);
+  transform: translateX(10px);
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Loading spinner elegante */
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(13, 202, 240, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .navbar {
+    margin: 10px;
+    padding: 15px 20px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem !important;
+  }
+  
+  .card {
+    margin: 0 10px;
+  }
+  
+  .same-height {
+    height: 200px;
+  }
+}
+
+/* Efectos de texto */
+.text-glow {
+  text-shadow: 0 0 10px rgba(13, 202, 240, 0.5);
+}
+
+/* Rating colors mejorados */
+.text-success {
+  color: #00ff88 !important;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.text-warning {
+  color: #ffd700 !important;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.text-danger {
+  color: #ff4757 !important;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+}
+
+/* Container principal */
+.container {
+  padding-top: 30px;
+}
+
+/* Mejoras para el iframe del trailer */
+.ratio iframe {
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
